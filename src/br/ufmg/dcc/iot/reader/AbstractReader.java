@@ -1,4 +1,7 @@
-package br.ufmg.dcc.iot.business;
+package br.ufmg.dcc.iot.reader;
+
+import br.ufmg.dcc.iot.business.ReadAttempt;
+import br.ufmg.dcc.iot.business.ReadResult;
 
 public class AbstractReader {
 

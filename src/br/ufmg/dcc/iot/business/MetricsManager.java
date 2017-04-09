@@ -40,10 +40,7 @@ public class MetricsManager {
 		for (ReadAttempt result : results) {
 			waitTime += result.getElapsedTime();
 		}
-		
-		System.out.println("Total Reads: " + totalReads);
-		System.out.println("Wait Time total: " + waitTime);
-		
+				
 		return ((double)totalReads  * 1000000000.0 / (double)waitTime);
 	}
 	

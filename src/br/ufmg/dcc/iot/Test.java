@@ -1,23 +1,44 @@
 package br.ufmg.dcc.iot;
 
+import com.alien.enterpriseRFID.reader.AlienReaderConnectionException;
+import com.alien.enterpriseRFID.reader.AlienReaderConnectionRefusedException;
+import com.alien.enterpriseRFID.reader.AlienReaderNotValidException;
+import com.alien.enterpriseRFID.reader.AlienReaderTimeoutException;
+
 import br.ufmg.dcc.iot.business.MetricsManager;
-import br.ufmg.dcc.iot.test.TestReader;
+import br.ufmg.dcc.iot.reader.rfid.RFIDReader;
 
 
 public class Test {
 
 	public static void main (String[] args) {
 		
-		TestReader test = new TestReader();
+		RFIDReader test = null;
+		try {
+			test = new RFIDReader();
+		} catch (AlienReaderConnectionRefusedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AlienReaderNotValidException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AlienReaderTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AlienReaderConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		MetricsManager manager = new MetricsManager();
 		
-		int i = 50000;
+		int i = 200;
 		while(i > 0) {
 			manager.addResult(test.read());
 			i--;
 		}		
 		
+		System.out.println(manager.getSuccessRatePercentage());
 		System.out.println(manager.getReadRate());
 		
 	}
