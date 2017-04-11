@@ -9,13 +9,13 @@ import br.ufmg.dcc.iot.business.MetricsManager;
 import br.ufmg.dcc.iot.reader.rfid.RFIDReader;
 
 
-public class Test {
+public class Main {
 
 	public static void main (String[] args) {
 		
-		RFIDReader test = null;
+		RFIDReader reader = null;
 		try {
-			test = new RFIDReader();
+			reader = new RFIDReader();
 		} catch (AlienReaderConnectionRefusedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,38 +34,13 @@ public class Test {
 		
 		int i = 200;
 		while(i > 0) {
-			manager.addResult(test.read());
+			manager.addResult(reader.read());
 			i--;
 		}		
 		
 		System.out.println(manager.getSuccessRatePercentage());
 		System.out.println(manager.getReadRate());
+		manager.printTagCount();
 		
-	}
-		
-//		String networkAddress = "Teste";
-//		int networkPort = 23;
-//
-//		AlienClass1Reader reader = new AlienClass1Reader();
-//		reader.setConnection(networkAddress, networkPort);
-//		
-//		try {
-//			reader.open();
-//		} catch (AlienReaderConnectionRefusedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (AlienReaderNotValidException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (AlienReaderTimeoutException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (AlienReaderConnectionException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		reader.close();
-//	}
-	
+	}	
 }

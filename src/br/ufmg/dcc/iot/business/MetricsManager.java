@@ -1,7 +1,12 @@
 package br.ufmg.dcc.iot.business;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import br.ufmg.dcc.iot.business.enums.ReadOutcome;
 
 /**
  * Faz os cálculos das métricas dos resultados obtidos.
@@ -22,7 +27,7 @@ public class MetricsManager {
 		int totalReads = results.size();
 		int successfulReads = 0;
 		for (ReadAttempt result : results) {
-			if(result.getResult().equals(ReadResult.SUCCESS)) {
+			if(result.getResult().getOutcome().equals(ReadOutcome.SUCCESS)) {
 				successfulReads++;
 			}
 		}
@@ -49,5 +54,24 @@ public class MetricsManager {
 	 */
 	public Double getSuccessRatePercentage() {
 		return successRate() * 100.0;
+	}
+	
+	public void printTagCount(){
+		
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		
+		for (ReadAttempt attempt : results) {
+			Integer tagCount = attempt.getResult().getTags().length;
+			if(map.containsKey(tagCount)) {
+				Integer value = map.get(tagCount);
+				map.put(tagCount, value + 1);
+			} else {
+				map.put(tagCount, 1);
+			}
+		}
+		
+		for(Entry<Integer, Integer> entrySet : map.entrySet()) {
+			System.out.println("Quantidade de tags lidas: " + entrySet.getKey() + " -> Número de vezes lidas: " + entrySet.getValue());
+		}
 	}
 }

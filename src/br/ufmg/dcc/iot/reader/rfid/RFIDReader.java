@@ -1,7 +1,8 @@
 package br.ufmg.dcc.iot.reader.rfid;
 
-import br.ufmg.dcc.iot.reader.AbstractReader;
 import br.ufmg.dcc.iot.business.ReadResult;
+import br.ufmg.dcc.iot.business.enums.ReadOutcome;
+import br.ufmg.dcc.iot.reader.AbstractReader;
 
 import com.alien.enterpriseRFID.reader.AlienClass1Reader;
 import com.alien.enterpriseRFID.reader.AlienReaderConnectionException;
@@ -48,10 +49,10 @@ public class RFIDReader extends AbstractReader {
 				e.printStackTrace();
 			}
 			if(tagList != null) {
-				return ReadResult.SUCCESS;
+				return new ReadResult(ReadOutcome.SUCCESS, tagList);
 			}
 		}
-		return ReadResult.FAILURE;
+		return new ReadResult(ReadOutcome.FAILURE);
 	}
 
 }
