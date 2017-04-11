@@ -2,7 +2,10 @@ package br.ufmg.dcc.iot.views;
 
 import br.ufmg.dcc.iot.business.common.ReaderConn;
 import br.ufmg.dcc.iot.controllers.BaseController;
-import br.ufmg.dcc.iot.services.ReaderService;
+import br.ufmg.dcc.iot.services.RFIDAutonomousReaderService;
+import br.ufmg.dcc.iot.services.RFIDReaderService;
+import br.ufmg.dcc.iot.services.RFIDService;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -40,7 +43,7 @@ public class HomeController extends BaseController {
 	//--- Attrs
 	private ReaderConn selectedConnection;
 	private Boolean inExecution;
-	private ReaderService readerService;
+	private RFIDService readerService;
 	
 	@Override
 	public void postShow() {		
@@ -63,7 +66,7 @@ public class HomeController extends BaseController {
 	
 	@FXML
 	private void onAutonomousChecked() {
-		readTriesText.setVisible(!autonomousCheckbox.isSelected());
+		readTriesText.setPromptText(autonomousCheckbox.isSelected() ? "Tempo de Execução (segundos)" : "Nº de Leituras");
 		readTriesText.setText("");
 		startReaderButton.setDisable(!isStartEnabled());
 	}
@@ -84,8 +87,7 @@ public class HomeController extends BaseController {
 	}
 	
 	private boolean isStartEnabled() {
-		return selectedConnection != null && ((!autonomousCheckbox.isSelected() 
-				&& !readTriesText.getText().isEmpty()) || autonomousCheckbox.isSelected());
+		return selectedConnection != null && !readTriesText.getText().isEmpty();
 	}
 	
 	private void handleExecutionView(boolean inExecution) {
@@ -99,12 +101,12 @@ public class HomeController extends BaseController {
 	}
 	
 	private void executeReader() {
-		Long attempts = 0L;
+		Long attempts = 1L;
 		
 		try {
 			attempts = Long.parseLong(readTriesText.getText());
 		} catch (NumberFormatException ex) {
-			//pass
+			return;
 		}
 		
 		try {
@@ -112,11 +114,21 @@ public class HomeController extends BaseController {
 			
 			handleExecutionView(true);
 			
-			readerService = new ReaderService(selectedConnection, attempts);
-			readerService.read(metrics -> {				
-				readLabel.setText(metrics.getReadAmount().toString());
-				readRateLabel.setText(String.format("%4.3f" , metrics.getReadRate()) + " tags/ns");
-				successRateLabel.setText(String.format("%4.3f" , metrics.getSuccessRatePercentage()) + "%");
+			if (autonomousCheckbox.isSelected())
+				readerService = new RFIDAutonomousReaderService(selectedConnection, attempts * 1000);
+			else
+				readerService = new RFIDReaderService(selectedConnection, attempts);
+				
+			readerService.start(metrics -> {		
+				Platform.runLater(() -> {
+					if (metrics.getTagReads() == null) {
+						handleExecutionView(false);
+					} else {
+						readLabel.setText(metrics.getReadAmount().toString());
+						readRateLabel.setText(String.format("%4.3f" , metrics.getReadRate()) + " tags/s");
+						successRateLabel.setText(String.format("%4.3f" , metrics.getSuccessRatePercentage()) + "%");
+					}
+				});				
 			});			
 		} catch (Exception e) {
 			handleExecutionView(false);

@@ -12,24 +12,19 @@ import br.ufmg.dcc.iot.reader.AbstractReader;
 public class RFIDReader extends AbstractReader {
 
 	private AlienClass1Reader reader;
-	private Long attempts;
 
-	public RFIDReader (ReaderConn connection, Long attempts) {
+	public RFIDReader (ReaderConn connection) {
 		super(connection);
 		this.reader = new AlienClass1Reader();
-		this.attempts = attempts;
 	}
-
-	public void dispose() {
-		reader.close();
-	}
-	
-	public Long getAttempts() {
-		return attempts;
-	}
-	
+		
 	public Boolean isOpen() {
 		return reader.isOpen();
+	}
+	
+	@Override
+	public void dispose() {
+		reader.close();
 	}
 	
 	@Override

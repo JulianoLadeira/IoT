@@ -27,4 +27,8 @@ public class TestReader extends AbstractReader {
 	@Override
 	public void connect() throws Exception {
 	}
+
+	@Override
+	public void dispose() {
+	}
 }

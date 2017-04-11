@@ -16,6 +16,7 @@ public abstract class AbstractReader {
 		long startTime = System.nanoTime();
 		ReadResult result = this.doRead();
 		long endTime = System.nanoTime();
+		
 		return new ReadAttempt(result, new Long(endTime - startTime));
 	}
 	
@@ -25,8 +26,7 @@ public abstract class AbstractReader {
 	 */
 	protected abstract ReadResult doRead();
 	
-	/**
-	 * Metodo que deve ser implementado pelas classes filhas para conexao.
-	 */
 	public abstract void connect() throws Exception;
+	
+	public abstract void dispose();
 }

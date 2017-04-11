@@ -54,12 +54,12 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </ComboBox>
-                  <CheckBox fx:id="autonomousCheckbox" mnemonicParsing="false" onAction="#onAutonomousChecked" selected="true" text="Habilitar Modo Autônomo">
+                  <CheckBox fx:id="autonomousCheckbox" mnemonicParsing="false" onAction="#onAutonomousChecked" text="Habilitar Modo Autônomo">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
                   </CheckBox>
-                  <TextField fx:id="readTriesText" promptText="Nº de Leituras" visible="false">
+                  <TextField fx:id="readTriesText" prefWidth="220.0" promptText="Nº de Leituras">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -94,8 +94,8 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                      <children>
-                        <Label styleClass="indicator-title" text="Taxa de Leitura (ns)" />
-                        <Label fx:id="readRateLabel" styleClass="indicator-data" text="0 tags/ns" />
+                        <Label styleClass="indicator-title" text="Taxa de Leitura" />
+                        <Label fx:id="readRateLabel" styleClass="indicator-data" text="0 tags/s" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
