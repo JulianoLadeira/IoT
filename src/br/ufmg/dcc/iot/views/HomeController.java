@@ -7,10 +7,13 @@ import br.ufmg.dcc.iot.services.RFIDReaderService;
 import br.ufmg.dcc.iot.services.RFIDService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class HomeController extends BaseController {
@@ -39,6 +42,9 @@ public class HomeController extends BaseController {
 	
 	@FXML
 	private Label readRateLabel;
+	
+	@FXML
+	private TextArea tagList;
 	
 	//--- Attrs
 	private ReaderConn selectedConnection;
@@ -124,6 +130,7 @@ public class HomeController extends BaseController {
 					if (metrics.getTagReads() == null) {
 						handleExecutionView(false);
 					} else {
+						tagList.setText(metrics.getTagString());						
 						readLabel.setText(metrics.getReadAmount().toString());
 						readRateLabel.setText(String.format("%4.3f" , metrics.getReadRate()) + " tags/s");
 						successRateLabel.setText(String.format("%4.3f" , metrics.getSuccessRatePercentage()) + "%");
@@ -133,6 +140,12 @@ public class HomeController extends BaseController {
 		} catch (Exception e) {
 			handleExecutionView(false);
 			e.printStackTrace();
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setHeaderText("Ocorreu um erro na leitura das tags");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
 		}
 	}
 	

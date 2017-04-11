@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane prefHeight="548.0" prefWidth="1200.0" styleClass="container" stylesheets="@assets/stylesheets/application.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="br.ufmg.dcc.iot.views.HomeController">
+<BorderPane prefHeight="548.0" prefWidth="1200.0" styleClass="container" stylesheets="@assets/stylesheets/application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufmg.dcc.iot.views.HomeController">
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -107,6 +106,11 @@
                </children>
             </GridPane>
             <Separator prefWidth="200.0" />
+            <TextArea fx:id="tagList" editable="false" prefHeight="229.0" prefWidth="1180.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextArea>
          </children>
       </VBox>
    </center>

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alien.enterpriseRFID.tags.Tag;
+
 import br.ufmg.dcc.iot.business.common.Metrics;
 import br.ufmg.dcc.iot.business.enums.ReadOutcome;
 
@@ -64,18 +66,16 @@ public class MetricsManager {
 		return successRate() * 100.0;
 	}
 	
-	public Map<Integer, Integer> getTagCount(){
+	public Map<String, Integer> getTagCount(){
 		
-		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		for (ReadAttempt attempt : results) {
 			if (attempt.getResult().getTags() != null) {
-				Integer tagCount = attempt.getResult().getTags().length;
-				if(map.containsKey(tagCount)) {
-					Integer value = map.get(tagCount);
-					map.put(tagCount, value + 1);
-				} else {
-					map.put(tagCount, 1);
+				for (Tag tag : attempt.getResult().getTags()) {
+					if (!map.containsKey(tag.getTagID()))
+						map.put(tag.getTagID(), 0);						
+					map.put(tag.getTagID(), map.get(tag.getTagID()) + 1);
 				}
 			}
 		}

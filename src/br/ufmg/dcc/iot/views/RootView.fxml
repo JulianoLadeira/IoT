@@ -14,7 +14,7 @@
    <top>
       <BorderPane prefWidth="200.0" styleClass="internal-header-separator" BorderPane.alignment="CENTER">
          <center>
-            <Label styleClass="title" text="IoT 2017/01 - RFID Tags" textAlignment="CENTER" BorderPane.alignment="CENTER">
+            <Label styleClass="title" text="IoT 2017/01 - RFID Tracker" textAlignment="CENTER" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="-200.0" />
                </BorderPane.margin>

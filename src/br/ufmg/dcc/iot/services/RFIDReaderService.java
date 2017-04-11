@@ -21,7 +21,7 @@ public class RFIDReaderService extends RFIDService {
 		Disposable disp = observable.subscribe(subscriber);
 		
 		runThread = new Thread(() -> {			
-			for (int i = 0; i < attemptsSeconds;) {
+			for (int i = 0; i < attemptsSeconds; i++) {
 			    manager.addResult(reader.read());
 			    observable.onNext(manager.getMetrics());
 			}
