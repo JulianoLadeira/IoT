@@ -1,0 +1,36 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+@import "fonts.css";
+
+.title {
+	-fx-font-family: 'Lato Bold';
+	-fx-font-size: 20px;
+}
+
+.container {
+	-fx-background-color: #FFFFFF;
+}
+
+.internal-header-separator {
+	-fx-pref-width: 1200px;
+	-fx-border-color: linear-gradient(to top, rgba(0, 0, 0, 0.04), transparent);
+	-fx-border-style: solid;
+	-fx-border-width: 0 0 6px 0;
+}
+
+.select-reader {
+	-fx-font-family: 'Lato Regular';
+	-fx-font-size: 14px;
+	-fx-text-fill: #000000;
+}
+
+.indicator-title {
+	-fx-font-family: 'Lato Regular';
+	-fx-font-size: 15px;
+}
+
+.indicator-data {
+	-fx-font-family: 'Lato Black';
+	-fx-font-size: 25px;
+	-fx-text-fill: rgb(198,0,11);
+}

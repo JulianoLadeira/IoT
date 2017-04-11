@@ -1,7 +1,12 @@
 package br.ufmg.dcc.iot.business;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import br.ufmg.dcc.iot.business.common.Metrics;
+import br.ufmg.dcc.iot.business.enums.ReadOutcome;
 
 /**
  * Faz os cálculos das métricas dos resultados obtidos.
@@ -14,6 +19,14 @@ public class MetricsManager {
 		results.add(result);
 	}
 	
+	public void clearResults() {
+		results.clear();
+	}
+	
+	public Integer getTotalReads() {
+		return results.size();
+	}
+	
 	/**
 	 * @return Taxa de sucesso.
 	 */
@@ -22,7 +35,7 @@ public class MetricsManager {
 		int totalReads = results.size();
 		int successfulReads = 0;
 		for (ReadAttempt result : results) {
-			if(result.getResult().equals(ReadResult.SUCCESS)) {
+			if(result.getResult().getOutcome().equals(ReadOutcome.SUCCESS)) {
 				successfulReads++;
 			}
 		}
@@ -49,5 +62,28 @@ public class MetricsManager {
 	 */
 	public Double getSuccessRatePercentage() {
 		return successRate() * 100.0;
+	}
+	
+	public Map<Integer, Integer> getTagCount(){
+		
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		
+		for (ReadAttempt attempt : results) {
+			if (attempt.getResult().getTags() != null) {
+				Integer tagCount = attempt.getResult().getTags().length;
+				if(map.containsKey(tagCount)) {
+					Integer value = map.get(tagCount);
+					map.put(tagCount, value + 1);
+				} else {
+					map.put(tagCount, 1);
+				}
+			}
+		}
+		
+		return map;
+	}
+	
+	public Metrics getMetrics() {
+		return new Metrics(getTotalReads(), getReadRate(), getSuccessRatePercentage(), getTagCount());
 	}
 }

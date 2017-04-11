@@ -2,10 +2,17 @@ package br.ufmg.dcc.iot.reader;
 
 import br.ufmg.dcc.iot.business.ReadAttempt;
 import br.ufmg.dcc.iot.business.ReadResult;
+import br.ufmg.dcc.iot.business.common.ReaderConn;
 
-public class AbstractReader {
+public abstract class AbstractReader {
 
-	public final ReadAttempt read () {
+	protected ReaderConn connection;
+	
+	public AbstractReader(ReaderConn connection) {
+		this.connection = connection;
+	}
+	
+	public final ReadAttempt read() {
 		long startTime = System.nanoTime();
 		ReadResult result = this.doRead();
 		long endTime = System.nanoTime();
@@ -16,8 +23,10 @@ public class AbstractReader {
 	 * Método que deve ser implementado pelas classes filhas.
 	 * @return
 	 */
-	protected ReadResult doRead () {
-		return null;
-	}
+	protected abstract ReadResult doRead();
+	
+	/**
+	 * Metodo que deve ser implementado pelas classes filhas para conexao.
+	 */
+	public abstract void connect() throws Exception;
 }
-
