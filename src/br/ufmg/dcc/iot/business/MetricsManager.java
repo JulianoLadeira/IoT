@@ -15,8 +15,20 @@ import br.ufmg.dcc.iot.business.enums.ReadOutcome;
  */
 public class MetricsManager {
 
-	private final List<ReadAttempt> results = new ArrayList<ReadAttempt>();
+	private final List<ReadAttempt> results;
 	
+	public MetricsManager() {
+		this.results = new ArrayList<ReadAttempt>();
+	}
+	
+	public MetricsManager(List<ReadAttempt> results) {
+		this.results = results;
+	}
+
+	public List<ReadAttempt> getResults() {
+		return results;
+	}
+
 	public void addResult(ReadAttempt result) {
 		results.add(result);
 	}
