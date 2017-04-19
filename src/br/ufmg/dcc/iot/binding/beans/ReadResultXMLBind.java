@@ -16,7 +16,7 @@ public class ReadResultXMLBind {
 		return tags;
 	}
 	
-	@XmlElement
+	@XmlElement(name="tag")
 	@XmlElementWrapper(name="tags")
 	public void setTags(List<TagXMLBind> tags) {
 		this.tags = tags;

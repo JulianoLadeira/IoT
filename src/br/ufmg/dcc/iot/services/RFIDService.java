@@ -38,6 +38,10 @@ public abstract class RFIDService {
 		runThread.stop();
 		reader.dispose();
 	}
+	
+	public MetricsManager getManager() {
+		return manager;
+	}
 
 	public abstract Disposable start(Consumer<Metrics> subscriber);
 

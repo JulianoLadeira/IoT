@@ -11,13 +11,9 @@ import br.ufmg.dcc.iot.binding.beans.MetricsManagerXMLBind;
 import br.ufmg.dcc.iot.binding.converter.MetricsManagerBinder;
 import br.ufmg.dcc.iot.business.MetricsManager;
 import br.ufmg.dcc.iot.business.ReadAttempt;
-import br.ufmg.dcc.iot.business.ReadResult;
 import br.ufmg.dcc.iot.business.common.ReaderConn;
-import br.ufmg.dcc.iot.reader.rfid.RFIDAutonomousReader;
 import br.ufmg.dcc.iot.reader.rfid.RFIDReader;
 import br.ufmg.dcc.iot.reader.test.TestReader;
-
-import com.alien.enterpriseRFID.tags.*;
 
 public class JAXBDelegate {
 
@@ -37,7 +33,7 @@ public class JAXBDelegate {
 	
 	public static void main(String args[]) throws Exception {
 		
-		ReaderConn connection = ReaderConn.createALR9900Conn(); 
+		/**ReaderConn connection = ReaderConn.createALR9900Conn(); 
 		
 		
 		RFIDReader leitorRFID = new RFIDReader(connection);
@@ -69,7 +65,6 @@ public class JAXBDelegate {
 		
 		
 		System.out.println(leitorRFID.isOpen());
-		*/
 		
 		
 		TestReader reader = null;
@@ -83,10 +78,10 @@ public class JAXBDelegate {
 			i--;
 			System.out.println(manager.getReadRate());
 			
-		}		
+		}		*/
 		File file = new File("file.xml");
 		try{
-			saveToFile(manager, file);
+			//saveToFile(manager, file);
 			MetricsManager managerr = loadFromFile(file);
 			System.out.println(managerr.getSuccessRatePercentage());
 		} catch(Exception e) {

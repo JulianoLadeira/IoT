@@ -1,5 +1,9 @@
 package br.ufmg.dcc.iot.views;
 
+import java.io.File;
+
+import br.ufmg.dcc.iot.binding.JAXBDelegate;
+import br.ufmg.dcc.iot.business.MetricsManager;
 import br.ufmg.dcc.iot.business.common.ReaderConn;
 import br.ufmg.dcc.iot.controllers.BaseController;
 import br.ufmg.dcc.iot.services.RFIDAutonomousReaderService;
@@ -46,6 +50,9 @@ public class HomeController extends BaseController {
 	@FXML
 	private TextArea tagList;
 	
+	@FXML
+	private TextField fileName;
+	
 	//--- Attrs
 	private ReaderConn selectedConnection;
 	private Boolean inExecution;
@@ -89,7 +96,15 @@ public class HomeController extends BaseController {
 	
 	@FXML
 	private void onSaveResults() {
+		File file = new File(fileName.getText().isEmpty() ? "file.xml" : fileName.getText());
 		
+		try{
+			JAXBDelegate.saveToFile(readerService.getManager(), file);
+			MetricsManager managerr = JAXBDelegate.loadFromFile(file);
+			System.out.println(managerr.getSuccessRatePercentage());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private boolean isStartEnabled() {
@@ -101,7 +116,7 @@ public class HomeController extends BaseController {
 		
 		connectionsList.setDisable(inExecution);
 		autonomousCheckbox.setDisable(inExecution);
-		//saveResultsButton.setDisable(inExecution);
+		saveResultsButton.setDisable(inExecution);
 		readTriesText.setDisable(inExecution);
 		startReaderButton.setText(inExecution ? "PARAR LEITURA" : "INICIAR LEITURA");
 	}
